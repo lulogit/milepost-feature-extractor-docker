@@ -10,6 +10,10 @@ So it can be useful to clone the repo.
 ```
 git clone https://github.com/lulogit/milepost-feature-extractor-docker.git
 ```
+## The image
+The docker image is available on [Docker Hub](https://hub.docker.com/r/lullo/milepost-feature-extractor/).
+It can be pulled via ```docker pull lullo/milepost-feature-extractor```.
+
 
 ## Usage
 The simplest way to run the *docker image* is via the provided *alias script*:
@@ -39,6 +43,20 @@ On *Ubuntu* it can be installed via the package manage:
 ```
 apt-get install docker.io
 ```
+
+## Dockerfile and build process
+The Dockerfile provided in this repo can be used to build the image. This is not useful since the image is already available on Docker Hub. However is extremely useful in order to obtain a **slightly modified version of the image**.
+In fact the image execute a custom script that just extract features from .c source files. But the image contains a full installation of MILEPOST GCC 2.1 and CTUNING-CC 2.5 (on which the feature extractor is based). So in order to fully exploit these tools, or customize the script, is suggested to modify the ```Dockerfile```.
+
+### The ```--squash``` flag
+Is important to notice that each command (RUN, COPY, ENV, ...) in the Dockerfile correspond to a layer, and each layer store the difference with respect to the previous layer in the image. This lead to huge image sizes when some file are created in one layer and deleted in another (is stored twice as difference). To avoid this the image was built using the ```--squash``` flag of ```docker run```. This merge all the layers together and produce an tiny image (files created in one layer and deleted in another are not included).
+
+### Building the image
+The image can be built by entering in the folder with the *Dockerfile* and running:
+```
+docker build --squash -t myimagetag .
+```
+The **tag** is a human readable name that can be used to reference that image thereafter (e.g: lullo/milepost-feature-extractor).
 
 ## Purpose
 Feature extraction is extremely useful in order to train the selection of compiler flags, in a machine learning setting.
