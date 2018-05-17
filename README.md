@@ -43,8 +43,8 @@ On *Ubuntu* it can be installed via the package manage:
 ```
 apt-get install docker.io
 ```
-It is preferred to use the version 17+ of Docker (follow the linked guide).
-If an older version is used, it is necessary to use the ```alias.pre17.sh``` file, since the ```--mount``` flag is not supported in ```docker run```.
+It is **recommended to use the version 1.17+ of Docker** (follow the linked guide).
+If an older version is used, it is necessary to use the ```alias.pre17.sh``` file, since the ```--mount``` flag is not supported in ```docker run```. Moreover is possible to experience [mounting problems due to SELinux](https://www.projectatomic.io/blog/2015/06/using-volumes-with-docker-can-cause-problems-with-selinux/). Those problems can be solved by installing a recent version (>=1.17).
 
 ## Dockerfile and build process
 The Dockerfile provided in this repo can be used to build the image. This is not useful since the image is already available on Docker Hub. However is extremely useful in order to obtain a **slightly modified version of the image**.
