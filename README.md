@@ -32,9 +32,8 @@ sudo chown $(id -u) ./features* # files created by the docker image are owned by
 The ```chown``` command is used to restore the ownership of the createted 'feature' folder to the current user. This due to the fact that docker's mounted files are owned by 'root' by default.
 
 In both cases the extractor will:
-1. analyze the .c source files present in the current path
+1. analyze the .c source files present in the current path (also libraries)
 2. save the files containing the extracted features (.ft) for every function in the program, in the ```features``` directory
-
 
 ## Dependencies
 Since it is a docker image, having docker installed is a prerequisite.
