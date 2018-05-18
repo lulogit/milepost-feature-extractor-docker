@@ -32,9 +32,8 @@ sudo chown $(id -u) ./features* # files created by the docker image are owned by
 The ```chown``` command is used to restore the ownership of the createted 'feature' folder to the current user. This due to the fact that docker's mounted files are owned by 'root' by default.
 
 In both cases the extractor will:
-1. analyze the .c source files present in the current path
+1. analyze the .c source files present in the current path (also libraries)
 2. save the files containing the extracted features (.ft) for every function in the program, in the ```features``` directory
-
 
 ## Dependencies
 Since it is a docker image, having docker installed is a prerequisite.
@@ -43,6 +42,8 @@ On *Ubuntu* it can be installed via the package manage:
 ```
 apt-get install docker.io
 ```
+It is **recommended to use the version 1.17+ of Docker** (follow the linked guide).
+If an older version is used, it is necessary to use the ```alias.pre17.sh``` file, since the ```--mount``` flag is not supported in ```docker run```. Moreover is possible to experience [mounting problems due to SELinux](https://www.projectatomic.io/blog/2015/06/using-volumes-with-docker-can-cause-problems-with-selinux/). Those problems can be solved by installing a recent version (>=1.17).
 
 ## Dockerfile and build process
 The Dockerfile provided in this repo can be used to build the image. This is not useful since the image is already available on Docker Hub. However is extremely useful in order to obtain a **slightly modified version of the image**.
@@ -60,7 +61,8 @@ The **tag** is a human readable name that can be used to reference that image th
 
 ## Purpose
 Feature extraction is extremely useful in order to train the selection of compiler flags, in a machine learning setting.
-This renders possible to automaticcaly optimize the compilation process by setting the flags that best fit the program features.
+This renders possible to automaticaly optimize the compilation process by setting the flags that best fit the program features.
+See the [MILEPOST project description](http://ctuning.org/wiki/index.php/CTools:MilepostFramework) for details.
 
 ## The features
 As reported from [the official MILEPOST GCC 2.1 features description](http://ctuning.org/wiki/index.php/CTools:MilepostGCC:StaticFeatures:MILEPOST_V2.1), these are the supported features for different extractor files.
